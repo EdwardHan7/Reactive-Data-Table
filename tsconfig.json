@@ -17,6 +17,8 @@
         "name": "next"
       }
     ],
+    "typeRoots": ["./node_modules/@types", "./declarations.d.ts"],
+
     "paths": {
       "@/*": ["./*"]
     }
