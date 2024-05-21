@@ -1,6 +1,5 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-Reactive Data Table with Next.js, TailwindCSS, and Supabase
-Project Overview
+
 This project aims to build a reactive, editable data table using Next.js, TailwindCSS, and Supabase, similar to the functionality of Clay or Airtable. The table supports CRUD operations, pagination, and real-time updates.
 
 Features
