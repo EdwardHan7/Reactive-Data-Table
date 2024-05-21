@@ -1,23 +1,58 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Reactive Data Table
 
-This project aims to build a reactive, editable data table using Next.js, TailwindCSS, and Supabase, similar to the functionality of Clay or Airtable. The table supports CRUD operations, pagination, and real-time updates.
+## Project Overview
 
-Features
-UI Design: All UI components are developed using TailwindCSS features, ensuring a clean and responsive design.    
+This project aims to build a responsive, editable data table application using Next.js, TailwindCSS, and Supabase. The project is successfully deployed on Vercel and can be accessed at: [reactive-data-table](https://reactive-data-table.vercel.app/)
 
-Sorting: Implemented sorting functionality allows sorting of data based on different columns.
+## Features
 
-CRUD Operations: The table supports creating, reading, updating, and deleting data.
+1. **UI Design**:
+   - The UI components are designed using TailwindCSS to ensure a clean and responsive design.
+   - The data table supports sorting, searching, and pagination.
 
-Pagination: Pagination controls allow users to navigate through the data, with options to select the pagination size.
+2. **Functionality**:
+   - **CRUD Operations**: Users can create, read, update, and delete data.
+   - **Pagination**: Implemented pagination controls allow users to navigate through the data and select the number of rows per page.
+   - **Search**: Supports case-insensitive search by ID and name.
+   - **Sorting**: Supports ascending and descending sorting by columns.
+   - **Real-Time Updates**: Utilizes Supabase's real-time features to reflect data changes immediately across all clients.
+   - **Image Upload**: Users can upload images to table cells (file size < 2MB). Images are displayed as thumbnails, which can be clicked to view the full image.
 
-Real-Time Updates: Utilizes Supabase's real-time capabilities to reflect changes made to the data across all clients immediately.
+3. **Supabase Configuration**:
+   - **Table**: Created a table named `Example` in Supabase with the following fields:
+     - `id` (int8)
+     - `name` (text)
+     - `age` (int2)
+     - `birthday` (date)
+     - `profile_picture` (text)
+   - **Bucket**: Created a bucket named `avatars` for storing uploaded image files.
+   - **Row Level Security (RLS) Policies**: Created a policy to allow public access for data reading:
+     ```sql
+     create policy "Public select policy"
+     on "public"."Example"
+     as permissive
+     for select
+     to public
+     using (true);
+     ```
+   - **RPC Function**: Created a custom RPC function for adding new columns:
+     ```sql
+     CREATE OR REPLACE FUNCTION add_column(table_name text, column_name text, column_type text)
+     RETURNS void AS $$
+     BEGIN
+       EXECUTE format('ALTER TABLE %I ADD COLUMN %I %s', table_name, column_name, column_type);
+     END;
+     $$ LANGUAGE plpgsql;
+     ```
 
-Search: Search functionality is implemented to filter data based on user input.
+## Accessing the Project
 
-Column Filtering: Framework is set up to allow filtering data based on different conditions.
+You can access the project at the following URL:
+[reactive-data-table](https://reactive-data-table.vercel.app/)
 
-Image Upload: Users can upload images into a cell (less than 2MB). Uploaded images are displayed as thumbnails, which can be clicked to view the full image.
+## Contributors
+
+Thank you to everyone who contributed to this project!
 
 ## Getting Started
 
